@@ -16,6 +16,13 @@ import lombok.Data;
 public class TaskEntity {
 
 	/**
+	 * Enumerado con los tipos de prioridad.
+	 */
+	public enum PRIORITY {
+		LOW, MEDIUM, HIGH;
+	}
+
+	/**
 	 * Id de la tarea;
 	 */
 	@Id
@@ -31,4 +38,9 @@ public class TaskEntity {
 	 * Descripcion de la tarea.
 	 */
 	private String description;
+
+	/**
+	 * Prioridad de la tarea.
+	 */
+	private PRIORITY priority;
 }
