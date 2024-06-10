@@ -24,9 +24,15 @@ public class DataInitializer {
 //		executeSqlStatement("INSERT INTO t_visited_places (user_username, country_id) VALUES ('admin', 1);");
 		// Tareas de ejemplo
 		executeSqlStatement(
-				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Completar informe', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'HIGH', 'DOING')");
+				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Mobile App Design', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'HIGH', 'DOING')");
 		executeSqlStatement(
-				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Hacer la compra', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'LOW', 'TODO')");
+				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Landing Page Design', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'LOW', 'TODO')");
+		executeSqlStatement(
+				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Landing Page Design', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'MEDIUM', 'TODO')");
+		executeSqlStatement(
+				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Landing Page Design', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'MEDIUM', 'TODO')");
+		executeSqlStatement(
+				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Landing Page Design', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'MEDIUM', 'TODO')");
 
 		// Usuarios de ejemplo
 		executeSqlStatement(
