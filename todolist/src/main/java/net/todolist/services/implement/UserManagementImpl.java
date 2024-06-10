@@ -18,4 +18,9 @@ public class UserManagementImpl implements UserManagementI {
 		return userRepository.findByUsername(username);
 	}
 
+	@Override
+	public UserEntity save(UserEntity user) {
+		return userRepository.save(user);
+	}
+
 }

@@ -6,5 +6,7 @@ public interface UserManagementI {
 
 	UserEntity findByUsername(String username);
 
+	UserEntity save(UserEntity user);
+
 	
 }

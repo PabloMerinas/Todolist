@@ -30,7 +30,7 @@ public class DataInitializer {
 
 		// Usuarios de ejemplo
 		executeSqlStatement(
-				"INSERT INTO t_users (username, password) VALUES ('user', 'userpass')");
+				"INSERT INTO t_users (username, password) VALUES ('user', 'user')");
 	}
 
 	/**
