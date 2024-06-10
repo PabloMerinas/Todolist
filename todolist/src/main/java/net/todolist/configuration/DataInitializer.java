@@ -22,9 +22,15 @@ public class DataInitializer {
 	public void initializeData() {
 //		executeSqlStatement("INSERT INTO t_visited_places (user_username, country_id) VALUES ('admin', 1);");
 //		executeSqlStatement("INSERT INTO t_visited_places (user_username, country_id) VALUES ('admin', 1);");
-		executeSqlStatement("INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Completar informe', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'HIGH', 'DOING')");
-		executeSqlStatement("INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Hacer la compra', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'LOW', 'TODO')");
+		// Tareas de ejemplo
+		executeSqlStatement(
+				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Completar informe', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'HIGH', 'DOING')");
+		executeSqlStatement(
+				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Hacer la compra', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'LOW', 'TODO')");
 
+		// Usuarios de ejemplo
+		executeSqlStatement(
+				"INSERT INTO t_users (username, password) VALUES ('user', 'user')");
 	}
 
 	/**

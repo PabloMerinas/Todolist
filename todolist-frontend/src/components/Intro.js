@@ -19,7 +19,7 @@ display: flex;
 const TextBox = styled.div`
 text-align: center;
 margin-left: 25px;
-margin-right: 25x;
+margin-right: 25px;
 color: ${props => props.theme.colors.text};
 h4{
     color: ${props => props.theme.colors.primary};
@@ -47,8 +47,8 @@ const Intro = () => {
             <TextBox>
                 <h1>Let's Organize Your Tasks</h1>
                 <h3>Make your todo in the note and manage your priority activity in daily life to achieve goals.</h3>
-                <Button onClick={() => navigate('/access')} >Get Started</Button>
-                <h4 onClick={() => navigate('access')} >Already have an account? Sign In</h4>
+                <Button onClick={() => navigate('/register')} >Get Started</Button>
+                <h4 onClick={() => navigate('login')} >Already have an account? Sign In</h4>
             </TextBox>
         </Container>
     )
