@@ -1,4 +1,5 @@
 package net.todolist.controller;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,15 +17,19 @@ public class UserController {
 	private UserManagementImpl userManagement;
 
 	@GetMapping("/userExists")
-	public UserEntity userExists(@RequestParam String username) {
+	public UserEntity userExists(@RequestParam String username, @RequestParam String password) {
 
-	    UserEntity user = userManagement.findByUsername(username);
-	    
-	    if (user != null) {
-	        return user;
-	    } else {
-	        return null;
-	    }
+		UserEntity user = userManagement.findByUsername(username);
+
+		if (user != null) {
+			if (password.equals(user.getPassword())) {
+				return user;
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 
 }

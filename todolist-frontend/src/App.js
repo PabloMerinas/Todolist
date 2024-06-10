@@ -7,6 +7,9 @@ import { lightTheme } from './components/Themes';
 // import { darkTheme } from './components/Themes';
 import Access from './components/Access';
 
+const IP = 'localhost';
+export const CONNECTION_URL = `http://${IP}:8081/api`;
+
 function App() {
 
   return (

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import IntroImage from '../assets/images/introImg.png'
 import { useNavigate } from 'react-router-dom'
+import { checkUserExists } from '../services/userService'
 
 const IntroImg = styled.img`
 width: 90%;
@@ -65,15 +66,18 @@ top: 25px;
 color: ${props => props.theme.colors.primary};
 font-size: 12px;
 `
+const ErrorMsg = styled.h4`
+color: red;
+margin-top: 30px;
+`
 
-const handleSubmit = () => {
-
-}
 
 const Access = ({ isLogin }) => {
+    const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
         username: '',
-        password: ''
+        password: '',
+        repeatPassword: ''
     });
     const navigate = useNavigate();
 
@@ -83,8 +87,23 @@ const Access = ({ isLogin }) => {
             ...formData,
             [name]: value
         });
+        setErrorMessage('');
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        const userExists = await checkUserExists(formData.username, formData.password);
+        
+        if(userExists){
+            console.log(userExists);
+            navigate('/main')
+        }else{
+            setErrorMessage('invalid credentials');
+        }
+        
+        formData.password = '';
+    }
 
     return (
         <Container >
@@ -98,6 +117,8 @@ const Access = ({ isLogin }) => {
                     value={formData.username}
                     onChange={handleChange}
                     placeholder="Username"
+                    autoComplete='username'
+                    required
                 />
                 <Input
                     type="password"
@@ -105,23 +126,28 @@ const Access = ({ isLogin }) => {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Password"
+                    autoComplete='password'
+                    required
                 />
                 {!isLogin ? (
                     <Input
                         type="password"
-                        name="password"
-                        value={formData.password}
+                        name="repeatPassword"
+                        value={formData.repeatPassword}
                         onChange={handleChange}
                         placeholder="Repeat password"
+                        autoComplete='repeat-password'
+                        required
                     />) : (null)}
                 <Button type="submit">{isLogin ? 'Login' : 'Register'}</Button>
                 <RegisterText>
                     {isLogin ? (
-                        <p onClick={() => navigate('/register')}>Still not registered?Register!</p>
+                        <p onClick={() => {navigate('/register'); setErrorMessage('')}}>Still not registered?    Register!</p>
                     ) : (
-                        <p onClick={() => navigate('/login')}>Already have an account?Sign In</p>
+                        <p onClick={() => {navigate('/login'); setErrorMessage('')}}>Already have an account?    Sign In</p>
                     )}
                 </RegisterText>
+                {errorMessage ? (<ErrorMsg>{errorMessage}</ErrorMsg>) : null}
             </Form>
         </Container>
     )
