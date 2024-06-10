@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import IntroImage from '../assets/images/introImg.png'
 import { useNavigate } from 'react-router-dom'
-import { checkUserExists } from '../services/userService'
+import { checkUserExists, registerUser } from '../services/userService'
 
 const IntroImg = styled.img`
 width: 90%;
@@ -33,6 +33,7 @@ margin: 0 auto;
 position: relative;
 top: -200px;
 z-index: 10;
+color: ${props => props.theme.colors.text};
 
 `
 const Input = styled.input`
@@ -93,23 +94,38 @@ const Access = ({ isLogin }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        const userExists = await checkUserExists(formData.username, formData.password);
+        if(isLogin){
+            const userExists = await checkUserExists(formData.username, formData.password);
         
-        if(userExists){
-            console.log(userExists);
-            navigate('/main')
+            if(userExists){
+                localStorage.setItem('ActiveUsername', formData.username);
+                navigate('/main')
+            }else{
+                setErrorMessage('Invalid credentials');
+            }
+            
+            formData.password = '';
         }else{
-            setErrorMessage('invalid credentials');
+            if(formData.password !== formData.repeatPassword){
+                setErrorMessage('Password don`t match')
+            }else{
+                
+                const userRegisteredMsg = await registerUser(formData);
+                setErrorMessage(userRegisteredMsg);
+                localStorage.setItem('ActiveUsername', formData.username);
+                setTimeout(() => {
+                    navigate('/main')
+                }, 1000);
+
+            }
         }
-        
-        formData.password = '';
     }
 
     return (
         <Container >
             <IntroImg src={IntroImage} />
             <Form onSubmit={handleSubmit} isLogin={isLogin}>
-                <h1 style={{ marginTop: '200px' }}
+                <h1 style={{ marginTop: '200px'}}
                 >Welcome!</h1>
                 <Input
                     type="text"
@@ -147,7 +163,7 @@ const Access = ({ isLogin }) => {
                         <p onClick={() => {navigate('/login'); setErrorMessage('')}}>Already have an account?    Sign In</p>
                     )}
                 </RegisterText>
-                {errorMessage ? (<ErrorMsg>{errorMessage}</ErrorMsg>) : null}
+                <ErrorMsg>{errorMessage}</ErrorMsg>
             </Form>
         </Container>
     )
