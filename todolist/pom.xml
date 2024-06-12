@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>net.todolist</groupId>
 	<artifactId>todolist</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.6</version>
 	<name>Todolist</name>
 	<description>Proyecto Todo List sencillo</description>
 	<properties>

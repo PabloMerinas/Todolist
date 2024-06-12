@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { getTasks } from '../services/taskService'
-import { Flag, Clock, Calendar } from './AllSvgs'
+import { Flag, Clock, Calendar, Principal, Add } from './AllSvgs'
 
 // #region Styles
 const Container = styled.div`
@@ -259,13 +259,28 @@ text-decoration: ${props => props.$active ? 'underline' : 'none'};
 const FooterDiv = styled.div`
 width: 100vw;
 height: 121px;
-position: absolute;
+position: sticky;
 bottom: 0;
 background-color: white;
 border-top-left-radius: 10px;
 border-top-right-radius: 10px;
 box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.5);
+display: flex;
 `
+const FooterAddButton = styled.button`
+width: 60px;
+height: 60px;
+position: absolute;
+right: 30px;
+border-radius: 16px;
+background-color: ${props => props.theme.colors.primary};
+border: none;
+bottom: 80px;
+box-shadow: 0px 0px 0px 9px white;
+cursor: pointer;
+
+`
+
 //#endregion StylesForFooter
 const Main = () => {
   const activeUsername = localStorage.getItem('ActiveUsername');
@@ -361,7 +376,7 @@ const Main = () => {
 
       </PriorityTask>
       <ReminderTask>
-        <LittleTitle>Reminder Task Today</LittleTitle>
+        <LittleTitle>Reminder Nearly Tasks</LittleTitle>
         <ReminderTaskGrid>
           {tasks
             .filter(task => {
@@ -409,13 +424,19 @@ const Main = () => {
             <MyTaskListItem key={`my-task-list-item-${task.id}`}>
               <h4>{task.title}</h4>
               <h5>{task.description}</h5>
-              <h6><Calendar width={'10px'} /> {new Date(task.toDate).toLocaleString()}</h6>
+              <h6><Calendar width={'10px'} /> {new Date(task.fromDate).toLocaleString()} - {new Date(task.toDate).toLocaleString()}</h6>
             </MyTaskListItem>
 
           ))}
         </MyTaskListGrid>
       </MyTaskList>
-      <FooterDiv></FooterDiv>
+      <FooterDiv>
+  <FooterAddButton>
+    <Add />
+  </FooterAddButton>
+  <div style={{marginLeft: '20px', display: 'flex'}} ><Principal width={'40px'} /> </div>
+</FooterDiv>
+
     </Container>
   )
 }
