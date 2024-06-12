@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { getTasks } from '../services/taskService'
-import { Flag } from './AllSvgs'
+import { Flag, Clock, Calendar } from './AllSvgs'
 
 // #region Styles
 const Container = styled.div`
 width: 100vw;
 max-width: 600px;
 height: 100%;
+min-height: 100%;
 background-color: ${props => props.theme.colors.background};
 margin: 0;
 display: flex;
@@ -36,7 +37,7 @@ font-weight: 500;
 //#region StylesForPriorityTask
 const PriorityTask = styled.div`
 width: 100vw;
-height: 250px;
+height: 210px;
 white-space: nowrap;
 overflow-x: auto;
 scrollbar-width: none;
@@ -46,7 +47,7 @@ display: flex;
 gap: 15px;
 position: relative;
 top: 40px;
-transition: transform 0.3s ease; /* Animación de transición para suavizar el movimiento */
+transition: transform 0.3s ease; 
 margin-left: 5px;
 margin-right: 5px;
 transform: translateX(${({ selectedIndex }) => selectedIndex !== null ? `calc(50% - ${selectedIndex * 165}px)` : '0px'});
@@ -63,6 +64,10 @@ const TaskItem = styled.div`
   box-sizing: border-box;
   cursor: grab;
   display: inline-block;
+  position: relative;
+  top: ${({ $isSelected }) => ($isSelected ? '0px' : '15px')};
+  transition: top 1s ease, width 0.7s ease, height 0.7s ease; 
+
 
   h4, h5 {
     text-align: left;
@@ -85,7 +90,7 @@ const TaskItem = styled.div`
 //#region StylesForReminderTask
 const ReminderTask = styled.div`
 width: 100vw;
-height: 250px;
+height: 90px;
 white-space: nowrap;
 overflow-x: auto;
 scrollbar-width: none;
@@ -94,7 +99,7 @@ const ReminderTaskGrid = styled.div`
 display: flex;
 position: relative;
 top: 40px;
-transition: transform 0.3s ease; /* Animación de transición para suavizar el movimiento */
+transition: transform 0.3s ease; 
 margin-left: 5px;
 margin-right: 5px;
 gap: 10px;
@@ -165,12 +170,109 @@ const getTimeRemaining = (toDate) => {
 
 // #endregion
 
+//#region StylesForMyTaskList
+const MyTaskList = styled.div`
+width: 100vw;
+`
+const MyTaskListGrid = styled.div`
+width: 100vw;
+max-height: 300px;
+margin-top: 20px;
+display: flex;
+flex-direction: column;
+gap: 20px;
+white-space: nowrap;
+overflow-y: auto;
+`
+const MyTaskListItem = styled.div`
+width: 350px;
+min-width: 350px;
+height: 70px;
+min-height: 70px;
+border-radius: 20px;
+margin: 0 auto;
+box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+border: 1px solid rgba(0, 0, 0, 0.25);
+white-space: nowrap;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+justify-content: center;
+
+h4{
+position: relative;
+width: 90%;
+text-align: left;
+margin: 0 0 0 20px;
+font-size: 15px;
+font-weight: 700;
+white-space: nowrap;
+overflow: hidden;
+
+}
+h5{
+width: 90%;
+position: relative;
+text-align: left;
+margin: 0 0 0 20px;
+font-weight: 600;
+white-space: nowrap;
+overflow: hidden;
+
+}
+h6{
+position: relative;
+text-align: left;
+margin: 0 0 0 20px;
+font-weight: 600;
+white-space: nowrap;
+overflow: hidden;
+}
+`
+
+const StatusDiv = styled.div`
+width: 90vw;
+margin: 0 auto;
+height: 30px;
+margin-top: 40px;
+/* background-color: lightblue; */
+display: flex;
+justify-content: space-between;
+align-items: center;
+`
+
+const StatusButton = styled.button`
+width: 50px;
+height: 16px;
+border: none;
+background-color: transparent;
+font-size: 10;
+padding: 0px;
+position: relative;
+top: ${props => props.$active ? '-4px' : null};
+font-weight: ${props => props.$active ? 800 : 700};
+text-decoration: ${props => props.$active ? 'underline' : 'none'};
+`
+//#endregion StylesForMyTaskList
+
+//#region StylesForFooter
+const FooterDiv = styled.div`
+width: 100vw;
+height: 121px;
+position: absolute;
+bottom: 0;
+background-color: white;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.5);
+`
+//#endregion StylesForFooter
 const Main = () => {
   const activeUsername = localStorage.getItem('ActiveUsername');
   const [tasks, setTasks] = useState([]);
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
+  const [stateFilter, setStateFilter] = useState('TODO');
 
-  // TODO
   console.log(tasks);
   useEffect(() => {
     const fetchTasks = async () => {
@@ -179,6 +281,18 @@ const Main = () => {
     };
 
     fetchTasks();
+  }, []);
+
+  // Actualiza el tiempo restante de las tareas cada segundo
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTasks(prevTasks => prevTasks.map(task => {
+        const { days, hours, minutes, seconds } = getTimeRemaining(task.toDate);
+        return { ...task, timeRemaining: { days, hours, minutes, seconds } };
+      }));
+    }, 1000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleTaskClick = (index) => {
@@ -227,8 +341,10 @@ const Main = () => {
       <PriorityTask id="priority-task-container">
         <LittleTitle>My priority Task</LittleTitle>
         <TaskGrid>
-          {/* <TaskItem /> */}
-          {tasks.map((task, index) => (
+          {tasks.sort((a, b) => {
+            const priorityOrder = { HIGH: 3, MEDIUM: 2, LOW: 1 };
+            return priorityOrder[b.priority] - priorityOrder[a.priority];
+          }).map((task, index) => (
             <TaskItem
               key={task.id}
               id={`task-${index}`}
@@ -242,34 +358,64 @@ const Main = () => {
             </TaskItem>
           ))}
         </TaskGrid>
+
       </PriorityTask>
       <ReminderTask>
         <LittleTitle>Reminder Task Today</LittleTitle>
         <ReminderTaskGrid>
-          {tasks.map((task) => {
-            const { days, hours, minutes, seconds } = getTimeRemaining(task.toDate);
-            if (days >= 0 && hours >= 0 && minutes >= 0 && seconds >= 0) {
+          {tasks
+            .filter(task => {
+              const { days, hours, minutes, seconds } = getTimeRemaining(task.toDate);
+              return days >= 0 && hours >= 0 && minutes >= 0 && seconds >= 0;
+            })
+            .sort((a, b) => {
+              const timeRemainingA = getTimeRemaining(a.toDate);
+              const timeRemainingB = getTimeRemaining(b.toDate);
+              const totalSecondsA = timeRemainingA.days * 24 * 60 * 60 + timeRemainingA.hours * 60 * 60 + timeRemainingA.minutes * 60 + timeRemainingA.seconds;
+              const totalSecondsB = timeRemainingB.days * 24 * 60 * 60 + timeRemainingB.hours * 60 * 60 + timeRemainingB.minutes * 60 + timeRemainingB.seconds;
+              return totalSecondsA - totalSecondsB;
+            })
+            .map(task => {
+              const { days, hours, minutes, seconds } = getTimeRemaining(task.toDate);
               return (
                 <ReminderTaskItem key={`reminder-task-item-${task.id}`} $circleColor={task.priority}>
                   <div />
                   <h4>{task.title}</h4>
                   <h5>
-                    {days > 0 ? (`${days} days ${hours} hours`) : (
-                      hours > 0 ? `${hours} hours ${minutes} minutes` : (
-                        minutes > 0 ? `${minutes} minutes ${seconds} seconds` : (
-                          seconds > 0 ? `${seconds} seconds` : null
+                    {days > 0 ? (`${days} days ${hours} hours `) : (
+                      hours > 0 ? `${hours} hours ${minutes} minutes ` : (
+                        minutes > 0 ? `${minutes} minutes ${seconds} seconds ` : (
+                          seconds > 0 ? `${seconds} seconds ` : null
                         )
                       )
-                    )}
+                    )}<Clock height={'6px'} />
                   </h5>
                 </ReminderTaskItem>
               );
-            }
-            return null; // No renderiza la tarea si su tiempo ha pasado
-          })}
-
+            })}
         </ReminderTaskGrid>
+
+
       </ReminderTask>
+      <MyTaskList>
+        <LittleTitle>My Task List</LittleTitle>
+        <StatusDiv>
+          <StatusButton $active={stateFilter === 'TODO'} onClick={() => setStateFilter('TODO')} >To Do</StatusButton>
+          <StatusButton $active={stateFilter === 'DOING'} onClick={() => setStateFilter('DOING')} >Doing</StatusButton>
+          <StatusButton $active={stateFilter === 'DONE'} onClick={() => setStateFilter('DONE')}>Done</StatusButton>
+        </StatusDiv>
+        <MyTaskListGrid>
+          {tasks.filter(task => task.state === stateFilter).map(task => (
+            <MyTaskListItem key={`my-task-list-item-${task.id}`}>
+              <h4>{task.title}</h4>
+              <h5>{task.description}</h5>
+              <h6><Calendar width={'10px'} /> {new Date(task.toDate).toLocaleString()}</h6>
+            </MyTaskListItem>
+
+          ))}
+        </MyTaskListGrid>
+      </MyTaskList>
+      <FooterDiv></FooterDiv>
     </Container>
   )
 }
