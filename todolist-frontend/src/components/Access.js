@@ -26,7 +26,7 @@ text-align: center;
 const Form = styled.form`
 background-color: ${props => props.theme.colors.secondary};
 width: 80%;
-height: ${props => props.isLogin ? '500px' : '560px'};
+height: ${props => props.$isLogin ? '500px' : '560px'};
 border-radius: 30px;
 border: 1px solid ${props => props.theme.colors.primary};
 margin: 0 auto;
@@ -124,7 +124,7 @@ const Access = ({ isLogin }) => {
     return (
         <Container >
             <IntroImg src={IntroImage} />
-            <Form onSubmit={handleSubmit} isLogin={isLogin}>
+            <Form onSubmit={handleSubmit} $isLogin={isLogin}>
                 <h1 style={{ marginTop: '200px'}}
                 >Welcome!</h1>
                 <Input

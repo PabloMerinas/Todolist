@@ -26,9 +26,9 @@ public class DataInitializer {
 		executeSqlStatement(
 				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Mobile App Design', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'HIGH', 'DOING')");
 		executeSqlStatement(
-				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Landing Page Design', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'LOW', 'TODO')");
+				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Landing Page Design', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-12 15:00:00', 'LOW', 'TODO')");
 		executeSqlStatement(
-				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Landing Page Design', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'MEDIUM', 'TODO')");
+				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Landing Page Design', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-15 15:00:00', 'MEDIUM', 'TODO')");
 		executeSqlStatement(
 				"INSERT INTO t_tasks (title, description, from_Date, to_Date, priority, state) VALUES ('Landing Page Design', 'Completar el informe mensual para el departamento de ventas.', '2024-06-10 09:00:00', '2024-06-10 15:00:00', 'MEDIUM', 'TODO')");
 		executeSqlStatement(
