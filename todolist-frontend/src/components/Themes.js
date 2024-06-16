@@ -6,7 +6,7 @@ export const lightTheme = {
         text: 'black'
     },
     globalStyles: {
-        maxWidthPc: '400px' // Hago este estilo para poder verlo en pc como demo
+        maxWidthPc: '420px' // Hago este estilo para poder verlo en pc como demo
     }
 }
 
@@ -17,6 +17,6 @@ export const darkTheme = {
         text: 'white'
     },
     globalStyles: {
-        maxWidthPc: '600px'
+        maxWidthPc: '420px' // Hago este estilo para poder verlo en pc como demo
     }
 }

@@ -68,14 +68,14 @@ export const Principal = ({ width, height }) => {
 }
 
 export const Add = ({ width, height, color }) => {
-  return(
+  return (
     <svg
-      xmlns = "http://www.w3.org/2000/svg"
+      xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      fill = "none"
-      viewBox = "0 0 24 24"
-      >
+      fill="none"
+      viewBox="0 0 24 24"
+    >
       <path
         stroke="#fff"
         strokeLinecap="round"
@@ -85,4 +85,19 @@ export const Add = ({ width, height, color }) => {
       ></path>
     </svg >
   );
+}
+
+export const Back = ({ width, height }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 1024 1024"
+    >
+      <path d="M224 480h640a32 32 0 110 64H224a32 32 0 010-64z"></path>
+      <path d="M237.248 512l265.408 265.344a32 32 0 01-45.312 45.312l-288-288a32 32 0 010-45.312l288-288a32 32 0 1145.312 45.312L237.248 512z"></path>
+    </svg>
+  );
+
 }

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { getTasks } from '../services/taskService'
-import { Flag, Clock, Calendar, Principal, Add } from './AllSvgs'
+import { Flag, Clock, Calendar } from './AllSvgs'
+import Footer from '../subComponents/Footer'
 
 // #region Styles
 const Container = styled.div`
@@ -170,7 +171,6 @@ const getTimeRemaining = (toDate) => {
 };
 
 
-// #endregion
 
 //#region StylesForMyTaskList
 const MyTaskList = styled.div`
@@ -264,34 +264,10 @@ text-decoration: ${props => props.$active ? 'underline' : 'none'};
 `
 //#endregion StylesForMyTaskList
 
-//#region StylesForFooter
-const FooterDiv = styled.div`
-width: 100vw;
-max-width: ${props => props.theme.globalStyles.maxWidthPc};
-height: 121px;
-position: absolute;
-bottom: 0;
-background-color: white;
-border-top-left-radius: 10px;
-border-top-right-radius: 10px;
-box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.5);
-display: flex;
-`
-const FooterAddButton = styled.button`
-width: 60px;
-height: 60px;
-position: absolute;
-right: 30px;
-border-radius: 16px;
-background-color: ${props => props.theme.colors.primary};
-border: none;
-bottom: 80px;
-box-shadow: 0px 0px 0px 9px white;
-cursor: pointer;
 
-`
 
-//#endregion StylesForFooter
+// #endregion Styles
+
 const Main = () => {
   const activeUsername = localStorage.getItem('ActiveUsername');
   const [tasks, setTasks] = useState([]);
@@ -440,12 +416,7 @@ const Main = () => {
           ))}
         </MyTaskListGrid>
       </MyTaskList>
-      <FooterDiv>
-  <FooterAddButton>
-    <Add />
-  </FooterAddButton>
-  <div style={{marginLeft: '20px', display: 'flex'}} ><Principal width={'40px'} /> </div>
-</FooterDiv>
+      <Footer />
 
     </Container>
   )
