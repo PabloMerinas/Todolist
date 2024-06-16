@@ -7,7 +7,7 @@ import { lightTheme } from './components/Themes';
 // import { darkTheme } from './components/Themes';
 import Access from './components/Access';
 
-const IP = '192.168.1.100';
+const IP = 'localhost';
 export const CONNECTION_URL = `http://${IP}:8081/api`;
 
 function App() {
@@ -28,3 +28,4 @@ function App() {
 }
 
 export default App;
+ 

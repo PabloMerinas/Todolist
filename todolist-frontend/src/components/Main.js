@@ -6,7 +6,7 @@ import { Flag, Clock, Calendar, Principal, Add } from './AllSvgs'
 // #region Styles
 const Container = styled.div`
 width: 100vw;
-max-width: 600px;
+max-width: ${props => props.theme.globalStyles.maxWidthPc};
 height: 100%;
 min-height: 100%;
 background-color: ${props => props.theme.colors.background};
@@ -37,6 +37,7 @@ font-weight: 500;
 //#region StylesForPriorityTask
 const PriorityTask = styled.div`
 width: 100vw;
+max-width: ${props => props.theme.globalStyles.maxWidthPc};
 height: 210px;
 white-space: nowrap;
 overflow-x: auto;
@@ -90,6 +91,7 @@ const TaskItem = styled.div`
 //#region StylesForReminderTask
 const ReminderTask = styled.div`
 width: 100vw;
+max-width: ${props => props.theme.globalStyles.maxWidthPc};
 height: 90px;
 white-space: nowrap;
 overflow-x: auto;
@@ -173,9 +175,12 @@ const getTimeRemaining = (toDate) => {
 //#region StylesForMyTaskList
 const MyTaskList = styled.div`
 width: 100vw;
+max-width: ${props => props.theme.globalStyles.maxWidthPc};
+
 `
 const MyTaskListGrid = styled.div`
 width: 100vw;
+max-width: ${props => props.theme.globalStyles.maxWidthPc};
 max-height: 300px;
 margin-top: 20px;
 display: flex;
@@ -183,6 +188,7 @@ flex-direction: column;
 gap: 20px;
 white-space: nowrap;
 overflow-y: auto;
+scrollbar-width: none;
 `
 const MyTaskListItem = styled.div`
 width: 350px;
@@ -232,6 +238,7 @@ overflow: hidden;
 
 const StatusDiv = styled.div`
 width: 90vw;
+max-width: ${props => props.theme.globalStyles.maxWidthPc};
 margin: 0 auto;
 height: 30px;
 margin-top: 40px;
@@ -239,6 +246,8 @@ margin-top: 40px;
 display: flex;
 justify-content: space-between;
 align-items: center;
+margin-left: 10px;
+margin-right: 10px;
 `
 
 const StatusButton = styled.button`
@@ -258,8 +267,9 @@ text-decoration: ${props => props.$active ? 'underline' : 'none'};
 //#region StylesForFooter
 const FooterDiv = styled.div`
 width: 100vw;
+max-width: ${props => props.theme.globalStyles.maxWidthPc};
 height: 121px;
-position: sticky;
+position: absolute;
 bottom: 0;
 background-color: white;
 border-top-left-radius: 10px;
