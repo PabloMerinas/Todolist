@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Container = styled.div`
 width: 100vw;
-max-width: 600px;
+max-width: ${props => props.theme.globalStyles.maxWidthPc};
 height: 100vh;
 background-color: ${props => props.theme.colors.background};
 margin: 0;

@@ -274,7 +274,6 @@ const Main = () => {
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
   const [stateFilter, setStateFilter] = useState('TODO');
 
-  console.log(tasks);
   useEffect(() => {
     const fetchTasks = async () => {
       const tasksData = await getTasks();
